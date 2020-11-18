@@ -15,7 +15,13 @@ const TodoItem: React.FC<TodoItemProps> = ({ todo, todos, setTodos }) => {
     Axios.delete(`http://localhost:5000/api/todos/${todo._id}`)
       .then(response => setTodos(response.data))
       .catch((err: string) => console.error(err));
-  };
+  }
+
+  function handleCompleteButton(): void {
+    Axios.patch(`http://localhost:5000/api/todos/${todo._id}`)
+      .then(response => setTodos(response.data))
+      .catch((err: string) => console.log(err));
+  }
 
   return (
     <li>
@@ -24,7 +30,7 @@ const TodoItem: React.FC<TodoItemProps> = ({ todo, todos, setTodos }) => {
         <button className="remove" onClick={handleRemoveButton}>
           <img src={removeIcon} alt="Remove" />
         </button>
-        <button className="complete">
+        <button className="complete" onClick={handleCompleteButton}>
           <img src={completeIcon} alt="Complete" />
         </button>
       </div>

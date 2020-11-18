@@ -12,6 +12,26 @@ router.get('/', async (_req, res) => {
   }
 });
 
+router.post('/', async (req, res) => {
+  try {
+    const todo = new Todo({
+      text: req.body.text,
+      completed: req.body.completed
+    });
+    await todo.save();
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+router.patch('/:id', async (req, res) => {
+  try {
+    await Todo.findByIdAndUpdate(req.params.id, { completed: true });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 router.delete('/:id', async (req, res) => {
   try {
     await Todo.deleteOne({ _id: req.params.id });

@@ -1,7 +1,8 @@
 import React from 'react';
-import { v4 as uuidv4 } from 'uuid';
+// import { v4 as uuidv4 } from 'uuid';
 import Todo from '../interfaces/Todo';
 import addIcon from '../assets/svgs/add_icon.svg';
+import Axios from 'axios';
 
 interface FormProps {
   text: string;
@@ -17,9 +18,11 @@ const Form: React.FC<FormProps> = ({ text, setText, todos, setTodos }) => {
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
     if (text === '') return;
-    const todo: Todo = { _id: uuidv4(), text }
+    const todo: Todo = { text, completed: false }
     e.preventDefault();
-    setTodos([todo, ...todos]);
+    Axios.post('http://localhost:5000/api/todos', todo)
+      .then(response => setTodos(response.data))
+      .catch((err: string) => console.error(err));
     setText('');
   }
 

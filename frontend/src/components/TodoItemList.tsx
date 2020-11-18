@@ -12,13 +12,17 @@ const TodoItemList: React.FC<TodoItemListProps> = ({ todos, setTodos }) => {
     <div className="container">
       {/* <Uncompleted tasks */}
       <ul className="todo" id="todo">
-        {todos.map(todo => (
+        {todos.filter(todo => !todo.completed).map(todo => (
           <TodoItem todos={todos} setTodos={setTodos} key={todo._id} todo={todo} />
         ))}
       </ul>
 
       {/* Completed tasks */}
-      <ul className="todo" id="completed"></ul>
+      <ul className="todo" id="completed">
+        {todos.filter(todo => todo.completed).map(todo => (
+          <TodoItem todos={todos} setTodos={setTodos} key={todo._id} todo={todo} />
+        ))}
+      </ul>
     </div>
   )
 }
